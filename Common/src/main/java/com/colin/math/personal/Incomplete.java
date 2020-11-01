@@ -1,4 +1,4 @@
-package com.colin.math;
+package com.colin.math.personal;
 
 public class Incomplete extends AbstractResult{
     public Incomplete(String output) {

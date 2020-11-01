@@ -1,4 +1,4 @@
-package com.colin.math;
+package com.colin.math.personal;
 
 import java.util.HashMap;
 import java.util.Map;

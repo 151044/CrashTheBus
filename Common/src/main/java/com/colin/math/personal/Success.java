@@ -1,4 +1,4 @@
-package com.colin.math;
+package com.colin.math.personal;
 
 public class Success extends AbstractResult{
     public Success(String output,Object result) {

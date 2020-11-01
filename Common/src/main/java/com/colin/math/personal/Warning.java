@@ -1,4 +1,4 @@
-package com.colin.math;
+package com.colin.math.personal;
 
 public class Warning extends AbstractResult{
     public Warning(String output, Object result) {

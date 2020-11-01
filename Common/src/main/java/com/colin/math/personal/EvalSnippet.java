@@ -1,4 +1,4 @@
-package com.colin.math;
+package com.colin.math.personal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class EvalSnippet {
-    private static final Pattern SYM = Pattern.compile("[+\\-*/^]");
+    private static final Pattern SYM = Pattern.compile("[+\\-*/^()]");
     private final String toEval;
 
     public EvalSnippet(String toEval) {
@@ -24,7 +24,7 @@ public class EvalSnippet {
     public EvalResult eval() {
         String calc = toEval.replaceAll("\\s+", "");
         List<String> operators = new ArrayList<>();
-        VarStore store = Environment.getStorage();
+        VarStore store = Variables.getStorage();
         //Good ole regex
         List<String> ops = Arrays.stream(calc.split("[+\\-*/<>(^]+(?![^(]*\\Q)\\E)")).map(String::trim).collect(Collectors.toList());
         for (String s : ops) {
@@ -55,12 +55,12 @@ public class EvalSnippet {
                     return new Incomplete("Impossible: Brackets not at the start of the split expression? Expression: " + calc);
                 }
                 //strip off the brackets, then reevaluate
-                EvalResult eval = new EvalSnippet(s.substring(1, s.length() - 2)).eval();
+                EvalResult eval = new EvalSnippet(s.substring(1, s.length() - 1)).eval();
                 if (eval.isSuccess()) {
                     int index = operators.indexOf(s);
-                    operators.remove(index + 1);
+                    //operators.remove(index + 1);
                     operators.remove(index);
-                    operators.remove(index - 1);
+                    //operators.remove(index - 1);
                     operators.add(index, String.valueOf(eval.getValue((Object obj) -> {
                         //Cast, we know the answer is double, we stored it there!
                         return (double) obj;
