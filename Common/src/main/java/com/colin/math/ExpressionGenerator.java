@@ -6,12 +6,12 @@ import com.colin.games.bus.Difficulty;
  * Represents a general math expression generator.
  */
 public abstract class ExpressionGenerator {
-    private final Difficulty diff;
-    public ExpressionGenerator(Difficulty diff){
-        this.diff = diff;
+    private final int points;
+    public ExpressionGenerator(int points){
+        this.points = points;
     }
-    public Difficulty getDifficulty(){
-        return diff;
+    public int getPoints(){
+        return points;
     }
     public abstract String getExpression();
 }
