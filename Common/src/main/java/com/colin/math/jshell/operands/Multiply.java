@@ -20,6 +20,6 @@ public class Multiply implements BinaryOperand{
 
     @Override
     public int points() {
-        return 0;
+        return 20;
     }
 }

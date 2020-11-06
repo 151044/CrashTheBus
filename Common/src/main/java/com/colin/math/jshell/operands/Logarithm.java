@@ -20,6 +20,6 @@ public class Logarithm implements BinaryOperand{
 
     @Override
     public int points() {
-        return 0;
+        return 50;
     }
 }

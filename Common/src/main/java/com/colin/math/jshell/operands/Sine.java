@@ -20,6 +20,6 @@ public class Sine implements UnaryOperand{
 
     @Override
     public int points() {
-        return 0;
+        return 30;
     }
 }

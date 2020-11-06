@@ -6,7 +6,7 @@ import com.colin.games.bus.Difficulty;
  * Represents a general math expression generator.
  */
 public abstract class ExpressionGenerator {
-    private final int points;
+    protected int points;
     public ExpressionGenerator(int points){
         this.points = points;
     }
