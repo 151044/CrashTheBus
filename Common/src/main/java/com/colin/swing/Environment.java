@@ -58,4 +58,7 @@ public class Environment {
             SwingUtilities.updateComponentTreeUI(w);
         }
     }
+    public static String getMessageSeparator(){
+        return "://:";
+    }
 }

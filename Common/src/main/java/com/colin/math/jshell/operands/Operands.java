@@ -1,78 +1,38 @@
 package com.colin.math.jshell.operands;
 
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Operands {
+    private static ThreadLocalRandom tlr = ThreadLocalRandom.current();
     private Operands(){
         throw new AssertionError("No Operands instance allowed.");
     }
-    private static List<Constructor<? extends BinaryOperand>> bOps = new ArrayList<>();
-    private static List<Constructor<? extends UnaryOperand>> uOps = new ArrayList<>();
+    private static List<Class<? extends BinaryOperand>> bOps;
+    private static List<Class<? extends UnaryOperand>> uOps;
     static{
-        Stream.of(Plus.class, Minus.class, Multiply.class, Divide.class, Logarithm.class, Exponent.class).forEach(c -> {
-            try {
-                bOps.add(c.getConstructor());
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-        });
-        Stream.of(Cosine.class, Tangent.class, Sine.class).forEach(c -> {
-            try {
-                uOps.add(c.getConstructor());
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-        });
+        bOps = List.of(Divide.class, Exponent.class, Logarithm.class, Minus.class, Multiply.class, Plus.class);
+        uOps = List.of(Cosine.class, Sine.class, Tangent.class);
     }
-    public static BinaryOperand getBinaryOp(int available){
-        //bOps.stream().map(c -> )
+    public static BinaryOperand getBinaryOp(int available) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return bOps.get(tlr.nextInt(bOps.size())).getConstructor().newInstance();
     }
-    public static UnaryOperand getUnaryOp(int available){
-
+    public static UnaryOperand getUnaryOp(int available) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return uOps.get(tlr.nextInt(uOps.size())).getConstructor().newInstance();
     }
     public static void addBinaryOps(BinaryOperand... ops){
-        Stream.of(ops).forEach(c -> {
-            try {
-                bOps.add(c.getClass().getConstructor());
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-        });
+        bOps.addAll(Stream.of(ops).map(op -> op.getClass()).collect(Collectors.toList()));
     }
     public static void addUnaryOps(UnaryOperand... ops){
-        Stream.of(ops).forEach(c -> {
-            try {
-                uOps.add(c.getClass().getConstructor());
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-        });
+        uOps.addAll(Stream.of(ops).map(op -> op.getClass()).collect(Collectors.toList()));
     }
     public static void addBinaryOps(List<BinaryOperand> ops){
-        ops.stream().forEach(c -> {
-            try {
-                bOps.add(c.getClass().getConstructor());
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-        });
+        bOps.addAll(ops.stream().map(op -> op.getClass()).collect(Collectors.toList()));
     }
     public static void addUnaryOps(List<UnaryOperand> ops){
-        ops.stream().forEach(c -> {
-            try {
-                uOps.add(c.getClass().getConstructor());
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-        });
+        uOps.addAll(ops.stream().map(op -> op.getClass()).collect(Collectors.toList()));
     }
 }
