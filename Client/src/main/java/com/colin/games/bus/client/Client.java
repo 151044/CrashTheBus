@@ -33,6 +33,7 @@ public class Client {
 
     public void start(){
         t = new Thread(() -> {
+            isStarted = true;
             Bootstrap boot = new Bootstrap();
             boot.group(new NioEventLoopGroup())
                     .handler(new ChannelInitializer<SocketChannel>() {
@@ -50,6 +51,7 @@ public class Client {
             try{
                 future = boot.connect(addr,port);
                 future.sync();
+                isConnected = true;
                 chan = future.channel();
                 chan.closeFuture().sync();
             } catch (InterruptedException e) {
