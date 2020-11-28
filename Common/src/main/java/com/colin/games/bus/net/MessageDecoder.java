@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MessageDecoder extends MessageToMessageDecoder<String> {
     @Override
-    protected void decode(ChannelHandlerContext ctx, String str, List<Object> out) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, String str, List<Object> out) {
         String[] arr = str.split(Environment.getMessageSeparator());
         if(arr.length != 2){
             //throw new MalformedMessageException();
